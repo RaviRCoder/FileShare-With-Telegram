@@ -171,10 +171,17 @@ class FileShareBot:
         Selected_Type = data["type"]
         if Selected_Type == "document":
             self.app.send_document(
-                chat_id, fileId, caption=f'`{filename}`\n**Size** : `{fileSize}`')
+                chat_id, fileId, caption=f'📖 **Title:** "`{filename}`"\n\n📏 **Size:** `{self.bytes_to_readable(fileSize)}`')
         elif Selected_Type == "video":
             self.app.send_video(
-                chat_id, fileId, caption=f'`{filename}`\n**Size** : `{fileSize}`')
+                chat_id, fileId, caption=f'📖 **Title:** "`{filename}`"\n\n📏 **Size:** `{self.bytes_to_readable(fileSize)}`')
         elif Selected_Type == "photo":
             self.app.send_photo(
-                chat_id, fileId, caption=f'`{filename}`\n**Size** : `{fileSize}`')
+                chat_id, fileId, caption=f'📖 **Title:** "`{filename}`"\n\n📏 **Size:** `{self.bytes_to_readable(fileSize)}`')
+    
+    def bytes_to_readable(self,bytes, decimal_places=2):
+        for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+            if bytes < 1024.0:
+                break
+            bytes /= 1024.0
+        return f"{bytes:.{decimal_places}f} {unit}"
