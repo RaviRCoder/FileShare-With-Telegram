@@ -154,3 +154,4 @@ cython_debug/
 # Customs
 *.session
 *.session-journal
+.vscode

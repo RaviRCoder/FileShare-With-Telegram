@@ -4,7 +4,7 @@ from database import DB
 import random
 import string
 import json
-from config import file_share_bot_usrname,user_db,data_db,admin_channel_username
+from config import file_share_bot_usrname, user_db, data_db, admin_channel_username
 
 
 filedata = []
@@ -38,7 +38,7 @@ class FileShareBot:
                                 self.upload_to_telegram(data[da], chat_id)
 
                     else:  # If chat_id isn't present in the list.
-                        self.app.send_message(chat_id, text=f"Hey, **{message.chat.first_name}**\n\nYou haven't Joined Our Developer Channel.\n\nPlease ✅Join to continue The Process", reply_to_message_id=message.id, reply_markup=InlineKeyboardMarkup(
+                        self.app.send_message(chat_id, text=f"👋 Hello there, {message.chat.first_name}!\n\n🚀 Ready to Joined Developer Channel.\n\n🔗 Simply tap the ✅ button to get started and continue the exciting journey.", reply_to_message_id=message.id, reply_markup=InlineKeyboardMarkup(
                             [
                                 [InlineKeyboardButton("✅ Join", url="https://telegram.me/RaviRCoder"), InlineKeyboardButton(
                                     "Start", callback_data=f"JoinedCheckUser")],
@@ -50,11 +50,12 @@ class FileShareBot:
                         "❌ This is Not a correct url!", quote=True)
             else:
                 message.reply_text(
-                    "Hello! I'm your bot.\nType /start  to get started.\nType /getlink to get file share bot link.")
+                    "👋 Greetings, I'm your friendly bot here to assist you!\n\n🌟 **/start** - Your gateway to an exciting journey with our friendly bot. Let's explore\n\n!📎 **/getlink** - Discover the magic of effortless file sharing. Get the file share bot link now and start sharing in style. 🪄📤")
 
         @self.app.on_message(filters.command("info"))
         def info(client, message):
-            message.reply_text(f"Hey,{message.chat.first_name} \n\n This bot is made to share your files with telegram Unlimited Space using link.\n\n Developer : [RaviRCoder](https://telegram.me/RaviRCoder) \n Library : [Pyrogram](https://docs.pyrogram.org) \n GitHub : [Telegram Automation](https://github.com/RaviRCoder/AutoMate_Telegram)\nDon't Forget to give me star⭐⭐.",quote=True)
+            message.reply_text(
+                f"Hey,{message.chat.first_name} \n\n This bot is made to share your files with telegram Unlimited Space using link.\n\n Developer : [RaviRCoder](https://telegram.me/RaviRCoder) \n Library : [Pyrogram](https://docs.pyrogram.org) \n GitHub : [Telegram Automation](https://github.com/RaviRCoder/AutoMate_Telegram)\nDon't Forget to give me star⭐⭐.", quote=True)
 
         @self.app.on_message()
         def mess(client, message):
@@ -127,11 +128,12 @@ class FileShareBot:
             if data == "JoinedCheckUser":
                 chat_id = callback_query.from_user.id
                 text = callback_query.message.reply_to_message.text
-                message_id=callback_query.message.id
+                message_id = callback_query.message.id
                 try:
                     # If chat_id is present in the list.
                     if self.CheckChatMembers(chat_id=chat_id) == True:
-                        self.app.delete_messages(chat_id,message_ids=[message_id])
+                        self.app.delete_messages(
+                            chat_id, message_ids=[message_id])
                         callback_query.answer(text="Checked! You have joined✅")
                         dtext = text.replace(
                             '/start ', '').replace("get_", '').split("_")
@@ -178,8 +180,8 @@ class FileShareBot:
         elif Selected_Type == "photo":
             self.app.send_photo(
                 chat_id, fileId, caption=f'📖 **Title:** "`{filename}`"\n\n📏 **Size:** `{self.bytes_to_readable(fileSize)}`')
-    
-    def bytes_to_readable(self,bytes, decimal_places=2):
+
+    def bytes_to_readable(self, bytes, decimal_places=2):
         for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
             if bytes < 1024.0:
                 break
